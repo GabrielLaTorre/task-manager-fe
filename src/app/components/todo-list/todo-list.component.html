@@ -1,0 +1,10 @@
+<div class="card mx-auto w-75 shadow p-1 mb-5 bg-body-tertiary rounded" style="margin-top: 5rem;">
+    <div class="card-header almarai-bold" style="background: #eaddd7;">
+        Task list
+    </div>
+    <ul class="list-group list-group-flush border m-4">
+        @for( todo of todos; track todo.id) {
+        <app-todo-item [todo]="todo"></app-todo-item>
+        }
+    </ul>
+</div>
