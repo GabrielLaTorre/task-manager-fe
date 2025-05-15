@@ -1,9 +1,11 @@
-<div class="form-container">
-    <h2>{{ isEditMode ? 'Edit todo' : 'New todo' }}</h2>
-    <input [(ngModel)]="todo.title" placeholder="todo title" />
-    <label>
-        <input type="checkbox" [(ngModel)]="todo.completed" />
-        Completed
-    </label>
-    <button>Save</button>
+<div class="card mx-auto w-75 shadow p-1 mb-5 bg-body-tertiary rounded" style="margin-top: 5rem;">
+    <div class="card-header almarai-bold" style="background: #eaddd7;">
+        {{ isEditMode ? 'Edit task' : 'New task' }}
+    </div>
+    <div
+        class="card-body text-center px-0 py-4 d-flex flex-column align-items-center mt-4 mb-3 mx-4 border border-2 border-light-subtle">
+        <input class="my-3 w-100 p3" [(ngModel)]="todo.title" placeholder="New Task... " />
+    </div>
+    <button class="btn mx-auto mb-2 btn-submit border border-2 border-dark-subtle"
+        [disabled]="todo.title.length < 5">Save</button>
 </div>

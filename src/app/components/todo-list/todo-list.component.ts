@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { TodoItemComponent } from "../todo-item/todo-item.component";
+import { Router } from '@angular/router';
+import { TodoStore } from '../../stores/todo.store';
+import { Todo } from '../../models/todo.model';
 
 @Component({
   selector: 'app-todo-list',
@@ -9,20 +12,27 @@ import { TodoItemComponent } from "../todo-item/todo-item.component";
 })
 export class TodoListComponent {
 
-  todos: { id: number, title: string, completed: boolean }[] = [
-    { id: 1, title: 'Learn Angular', completed: false },
-    { id: 2, title: 'Build a Todo App', completed: false },
-    { id: 3, title: 'Deploy to Production', completed: false }
-  ];
+  constructor(public store: TodoStore, private router: Router) {
+    if (this.store.todos().length === 0) {
+      this.store.loadTodos();
+    }
+  }
 
-  addTodo(title: string) {
-    const newTodo = { id: this.todos.length + 1, title, completed: false };
-    this.todos.push(newTodo);
+  async toggle(todo: Todo) {
+    await this.store.update({ ...todo, completed: !todo.completed });
   }
-  toggleTodoCompletion(todo: { id: number, title: string, completed: boolean }) {
-    todo.completed = !todo.completed;
+
+  edit(todo: Todo) {
+    this.store.select(todo);
+    this.router.navigate(['/edit', todo.id]);
   }
-  deleteTodo(todo: { id: number, title: string, completed: boolean }) {
-    this.todos = this.todos.filter(t => t.id !== todo.id);
+
+  async remove(id: number) {
+    await this.store.delete(id);
+  }
+
+  addTodo() {
+    this.store.clearSelection();
+    this.router.navigate(['/new']);
   }
 }

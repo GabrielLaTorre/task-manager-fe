@@ -2,9 +2,26 @@
     <div class="card-header almarai-bold" style="background: #eaddd7;">
         Task list
     </div>
-    <ul class="list-group list-group-flush border m-4">
-        @for( todo of todos; track todo.id) {
-        <app-todo-item [todo]="todo"></app-todo-item>
-        }
-    </ul>
+    <div class="card-body">
+        <ul class="list-group list-group-flush border m-4">
+            @if (store.loading()) {
+            <li class="list-group-item">
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                } @else if(store.todos().length === 0) {
+            <li class="list-group-item">
+                <h5 class="text-center">No tasks available</h5>
+                <p class="text-center">Click on the button below to add a new task</p>
+            </li>
+            } @else {
+            @for( todo of store.todos(); track todo.id) {
+            <app-todo-item [todo]="todo"></app-todo-item>
+            }
+            }
+        </ul>
+    </div>
+    <button class="fab" (click)="addTodo()">➕</button>
 </div>
