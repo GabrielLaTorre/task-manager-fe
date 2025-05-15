@@ -21,13 +21,13 @@ export class TodoStore {
         this._loading.set(false);
     }
 
-    async add(todo: Todo): Promise<void> {
-        const newTodo = await this.todoService.createTodo(todo);
-        this._todos.update(t => [...t, newTodo]);
+    async add(newTodo: Partial<Todo>): Promise<void> {
+        const created = await this.todoService.createTodo(newTodo);
+        this._todos.update(t => [...t, created]);
     }
 
-    async update(todo: Todo): Promise<void> {
-        const updated = await this.todoService.updateTodo(todo);
+    async update(update: Partial<Todo>): Promise<void> {
+        const updated = await this.todoService.updateTodo(update);
         this._todos.update(t => t.map(x => x.id === updated.id ? updated : x));
     }
 

@@ -18,19 +18,6 @@ export class TodoListComponent {
     }
   }
 
-  async toggle(todo: Todo) {
-    await this.store.update({ ...todo, completed: !todo.completed });
-  }
-
-  edit(todo: Todo) {
-    this.store.select(todo);
-    this.router.navigate(['/edit', todo.id]);
-  }
-
-  async remove(id: number) {
-    await this.store.delete(id);
-  }
-
   addTodo() {
     this.store.clearSelection();
     this.router.navigate(['/new']);

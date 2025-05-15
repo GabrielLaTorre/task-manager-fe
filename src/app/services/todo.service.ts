@@ -26,15 +26,39 @@ export class TodoService {
     })
   }
 
-  createTodo(todo: Todo): Promise<Todo> {
-    return firstValueFrom(this.http.post<Todo>(this.apiUrl, todo));
+  createTodo(todo: Partial<Todo>): Promise<Todo> {
+    // return firstValueFrom(this.http.post<Todo>(this.apiUrl, todo));
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const newTodo = { ...todo, id: this.mockedTodos.length + 1 } as Todo;
+        this.mockedTodos.push(newTodo);
+        resolve(newTodo);
+      }, 200);
+    });
   }
 
-  updateTodo(todo: Todo): Promise<Todo> {
-    return firstValueFrom(this.http.put<Todo>(`${this.apiUrl}/${todo.id}`, todo));
+  updateTodo(todo: Partial<Todo>): Promise<Todo> {
+    // return firstValueFrom(this.http.put<Todo>(`${this.apiUrl}/${todo.id}`, todo));
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const index = this.mockedTodos.findIndex(t => t.id === todo.id);
+        if (index !== -1) {
+          this.mockedTodos[index] = { ...this.mockedTodos[index], ...todo } as Todo;
+          resolve(this.mockedTodos[index]);
+        } else {
+          resolve(todo as Todo);
+        }
+      }, 200);
+    });
   }
 
   deleteTodo(id: number): Promise<void> {
-    return firstValueFrom(this.http.delete<void>(`${this.apiUrl}/${id}`));
+    // return firstValueFrom(this.http.delete<void>(`${this.apiUrl}/${id}`));
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        this.mockedTodos = this.mockedTodos.filter(todo => todo.id !== id);
+        resolve();
+      }, 200);
+    });
   }
 }

@@ -1,4 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { TodoStore } from '../../stores/todo.store';
+import { Router } from '@angular/router';
+import { Todo } from '../../models/todo.model';
 
 @Component({
   selector: 'app-todo-item',
@@ -8,5 +11,23 @@ import { Component, Input } from '@angular/core';
 })
 export class TodoItemComponent {
 
-  @Input() todo: { id: number, title: string, completed: boolean } = { id: 0, title: '', completed: false };
+  @Input() todo!: Todo;
+
+  constructor(
+    private store: TodoStore,
+    private router: Router
+  ) { }
+
+  async toggle(todo: Todo) {
+    await this.store.update({ completed: !todo.completed });
+  }
+
+  edit(todo: Todo) {
+    this.store.select(todo);
+    this.router.navigate(['/edit', todo.id]);
+  }
+
+  async remove(id: number) {
+    await this.store.delete(id);
+  }
 }
