@@ -1,0 +1,9 @@
+<div class="form-container">
+    <h2>{{ isEditMode ? 'Edit todo' : 'New todo' }}</h2>
+    <input [(ngModel)]="todo.title" placeholder="todo title" />
+    <label>
+        <input type="checkbox" [(ngModel)]="todo.completed" />
+        Completed
+    </label>
+    <button>Save</button>
+</div>
