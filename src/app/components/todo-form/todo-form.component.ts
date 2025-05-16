@@ -1,20 +1,22 @@
 import { Component, inject } from '@angular/core';
 import { Todo } from '../../models/todo.model';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TodoStore } from '../../stores/todo.store';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-todo-form',
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './todo-form.component.html',
   styleUrls: ['./todo-form.component.css']
 })
 export class TodoFormComponent {
-  todoTitle: string = '';
   isEditMode = false;
   selectedTodo: Todo | null = null;
+  todoForm = new FormGroup({
+    title: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]),
+  });
   private _snackBar = inject(MatSnackBar);
 
   constructor(
@@ -24,21 +26,22 @@ export class TodoFormComponent {
     this.selectedTodo = store.selectedTodo();
 
     if (this.selectedTodo) {
-      this.todoTitle = { ...this.selectedTodo }.title;
+      this.todoForm.setValue({
+        title: { ... this.selectedTodo }.title,
+      });
       this.isEditMode = true;
     }
   }
 
   async save() {
-
     try {
       if (this.isEditMode) {
         await this.store.update({
-          title: this.todoTitle,
+          title: this.todoForm.value.title!,
         }, this.selectedTodo!.id);
       } else {
         await this.store.add({
-          title: this.todoTitle,
+          title: this.todoForm.value.title!,
           completed: false,
         });
       }
