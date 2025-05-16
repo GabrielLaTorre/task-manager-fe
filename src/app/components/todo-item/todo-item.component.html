@@ -2,7 +2,8 @@
     <div class="form-check">
         <input class="form-check-input" type="checkbox" (change)="toggle(todo)" [checked]="todo.completed"
             id={{todo.id}} />
-        <label class="form-check-label" for={{todo.id}}>{{todo.title}}</label>
+        <label class="checkbox-label" for={{todo.id}}></label>
+        <label class="form-check-label">{{todo.title}}</label>
     </div>
     <div>
         <a class="todo-action" (click)="edit(todo)">
