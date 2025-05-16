@@ -2,6 +2,11 @@
 
 This project serve as frontend for Task manager project
 
+## Design - Mockup 🎨 (Simple)
+
+https://excalidraw.com/#json=CQpBJUhC_c24y9lvC0J4a,LZFXRMDMBcY5TIAE9ngPfA
+
+
 ## Development server
 
 To start a local development server, run:
