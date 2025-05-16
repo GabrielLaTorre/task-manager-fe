@@ -16,3 +16,35 @@ button {
     height: 3rem;
     font-size: 1.5rem;
 }
+
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 0.05rem;
+}
+
+.filters button {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #3b2f2f;
+    font-size: 1rem;
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-weight: 400;
+}
+
+.filters button:hover,
+.filters button:focus {
+    background-color: #eee4df;
+    border-bottom: 2px solid #b99b91;
+    /* marrón suave */
+    outline: none;
+}
+
+.filters button.active {
+    border-bottom: 2px solid #a37f71;
+    font-weight: 500;
+    background-color: #f0e6e2;
+}

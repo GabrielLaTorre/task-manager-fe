@@ -19,7 +19,7 @@ export class TodoItemComponent {
   ) { }
 
   async toggle(todo: Todo) {
-    await this.store.update({ completed: !todo.completed });
+    await this.store.update({ completed: !todo.completed }, todo.id);
   }
 
   edit(todo: Todo) {
@@ -27,7 +27,7 @@ export class TodoItemComponent {
     this.router.navigate(['/edit', todo.id]);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     await this.store.delete(id);
   }
 }

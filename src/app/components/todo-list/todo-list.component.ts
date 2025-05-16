@@ -22,4 +22,8 @@ export class TodoListComponent {
     this.store.clearSelection();
     this.router.navigate(['/new']);
   }
+
+  setFilter(filter: 'all' | 'completed' | 'pending') {
+    this.store.setFilter(filter);
+  }
 }

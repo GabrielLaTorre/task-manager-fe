@@ -13,15 +13,16 @@ import { Router } from '@angular/router';
 export class TodoFormComponent {
   todoTitle: string = '';
   isEditMode = false;
+  selectedTodo: Todo | null = null;
 
   constructor(
     private store: TodoStore,
     private router: Router
   ) {
-    const selected = store.selectedTodo();
+    this.selectedTodo = store.selectedTodo();
 
-    if (selected) {
-      this.todoTitle = { ...selected }.title;
+    if (this.selectedTodo) {
+      this.todoTitle = { ...this.selectedTodo }.title;
       this.isEditMode = true;
     }
   }
@@ -30,7 +31,7 @@ export class TodoFormComponent {
     if (this.isEditMode) {
       await this.store.update({
         title: this.todoTitle,
-      });
+      }, this.selectedTodo!.id);
     } else {
       await this.store.add({
         title: this.todoTitle,

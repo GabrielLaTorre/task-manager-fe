@@ -2,6 +2,12 @@
     <div class="card-header almarai-bold" style="background: #eaddd7;">
         Task list
     </div>
+    <div class="filters">
+        <button (click)="setFilter('all')" [class.active]="store.currentFilter() === 'all'">All</button>
+        <button (click)="setFilter('completed')"
+            [class.active]="store.currentFilter() === 'completed'">Completed</button>
+        <button (click)="setFilter('pending')" [class.active]="store.currentFilter() === 'pending'">Pending</button>
+    </div>
     <div class="card-body">
         <ul class="list-group list-group-flush border m-4">
             @if (store.loading()) {
