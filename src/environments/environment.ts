@@ -1,4 +1,4 @@
 export const environment = {
-    production: true,
-    apiUrl: 'task-manager-be-production-ff29.up.railway.app/todos',
+    production: false,
+    apiUrl: 'http://localhost:3000/todos',
 };
