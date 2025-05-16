@@ -1,4 +1,4 @@
-# TaskManagerFe
+# TaskManager Frontend
 
 This project serve as frontend for Task manager project
 
