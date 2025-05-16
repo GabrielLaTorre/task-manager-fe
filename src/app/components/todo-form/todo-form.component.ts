@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Todo } from '../../models/todo.model';
 import { FormsModule } from '@angular/forms';
 import { TodoStore } from '../../stores/todo.store';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-todo-form',
@@ -14,6 +15,7 @@ export class TodoFormComponent {
   todoTitle: string = '';
   isEditMode = false;
   selectedTodo: Todo | null = null;
+  private _snackBar = inject(MatSnackBar);
 
   constructor(
     private store: TodoStore,
@@ -28,18 +30,32 @@ export class TodoFormComponent {
   }
 
   async save() {
-    if (this.isEditMode) {
-      await this.store.update({
-        title: this.todoTitle,
-      }, this.selectedTodo!.id);
-    } else {
-      await this.store.add({
-        title: this.todoTitle,
-        completed: false,
+
+    try {
+      if (this.isEditMode) {
+        await this.store.update({
+          title: this.todoTitle,
+        }, this.selectedTodo!.id);
+      } else {
+        await this.store.add({
+          title: this.todoTitle,
+          completed: false,
+        });
+      }
+      this.store.clearSelection();
+      this._snackBar.open(`Todo ${this.isEditMode ? 'updated' : 'added'}`, 'Close', {
+        duration: 2000,
+        panelClass: ['snackbar-success']
       });
+      this.router.navigate(['/']);
+    } catch (error) {
+      console.error('Error saving todo:', error);
+      this._snackBar.open('Error saving todo', 'Close', {
+        duration: 2000,
+        panelClass: ['snackbar-error']
+      });
+      return;
     }
-    this.store.clearSelection();
-    this.router.navigate(['/']);
   }
 
   goBack() {

@@ -29,7 +29,6 @@ export class TodoStore {
 
     async loadTodos(): Promise<void> {
         const todos = await this.todoService.fetchTodos();
-        console.log('Fetched todos', todos);
         this._todos.set(todos);
         this._loading.set(false);
     }
